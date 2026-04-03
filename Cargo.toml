@@ -1,0 +1,19 @@
+[package]
+name = "cinderblock-ticketing"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+cinderblock-core = "0.4.0"
+cinderblock-json-api = { version = "0.4.0", features = ["swagger-ui"] }
+cinderblock-sqlx = "0.4.0"
+tokio = { version = "1", features = ["full"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+sqlx = { version = "0.8", features = ["sqlite", "runtime-tokio", "uuid"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+chrono = { version = "0.4", features = ["serde"] }
+tower-http = { version = "0.6", features = ["cors"] }
+utoipa = { version = "5.4.0", features = ["uuid"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"
