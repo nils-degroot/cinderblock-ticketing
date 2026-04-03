@@ -230,9 +230,15 @@ export default function TicketDetail() {
           {/* Description */}
           <div className="rounded-xl border border-gray-200 bg-white p-6">
             <h2 className="text-sm font-semibold text-gray-900">Description</h2>
-            <p className="mt-3 text-sm leading-relaxed text-gray-700 whitespace-pre-wrap">
-              {ticket.description}
-            </p>
+            {ticket.description ? (
+              <p className="mt-3 text-sm leading-relaxed text-gray-700 whitespace-pre-wrap">
+                {ticket.description}
+              </p>
+            ) : (
+              <p className="mt-3 text-sm italic text-gray-400">
+                No description provided.
+              </p>
+            )}
           </div>
 
           {/* Comments */}

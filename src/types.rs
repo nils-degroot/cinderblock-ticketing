@@ -27,6 +27,8 @@ cinderblock_json_api::impl_field_schema!(TicketStatus);
     Default,
     PartialEq,
     Eq,
+    PartialOrd,
+    Ord,
     Serialize,
     Deserialize,
     sqlx::Type,

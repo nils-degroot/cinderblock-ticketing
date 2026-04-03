@@ -1,6 +1,6 @@
 use cinderblock_sqlx::sqlite::SqliteDataLayer;
 
-pub async fn setup(dl: &SqliteDataLayer) -> cinderblock_core::Result<()> {
+pub async fn setup(dl: &SqliteDataLayer) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     sqlx::query(
         "CREATE TABLE IF NOT EXISTS users (
             user_id TEXT NOT NULL PRIMARY KEY,
@@ -10,8 +10,7 @@ pub async fn setup(dl: &SqliteDataLayer) -> cinderblock_core::Result<()> {
         )",
     )
     .execute(dl.pool())
-    .await
-    .map_err(|e| format!("create users table: {e}"))?;
+    .await?;
 
     sqlx::query(
         "CREATE TABLE IF NOT EXISTS labels (
@@ -21,14 +20,13 @@ pub async fn setup(dl: &SqliteDataLayer) -> cinderblock_core::Result<()> {
         )",
     )
     .execute(dl.pool())
-    .await
-    .map_err(|e| format!("create labels table: {e}"))?;
+    .await?;
 
     sqlx::query(
         "CREATE TABLE IF NOT EXISTS tickets (
             ticket_id TEXT NOT NULL PRIMARY KEY,
             subject TEXT NOT NULL,
-            description TEXT NOT NULL,
+            description TEXT,
             status TEXT NOT NULL,
             priority TEXT NOT NULL,
             reporter_id TEXT NOT NULL REFERENCES users(user_id),
@@ -38,8 +36,7 @@ pub async fn setup(dl: &SqliteDataLayer) -> cinderblock_core::Result<()> {
         )",
     )
     .execute(dl.pool())
-    .await
-    .map_err(|e| format!("create tickets table: {e}"))?;
+    .await?;
 
     sqlx::query(
         "CREATE TABLE IF NOT EXISTS comments (
@@ -51,8 +48,7 @@ pub async fn setup(dl: &SqliteDataLayer) -> cinderblock_core::Result<()> {
         )",
     )
     .execute(dl.pool())
-    .await
-    .map_err(|e| format!("create comments table: {e}"))?;
+    .await?;
 
     Ok(())
 }

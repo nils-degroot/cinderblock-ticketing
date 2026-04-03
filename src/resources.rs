@@ -112,7 +112,7 @@ resource! {
         }
 
         subject String;
-        description String;
+        description Option<String>;
         status TicketStatus;
         priority TicketPriority;
         reporter_id Uuid;
@@ -148,6 +148,7 @@ resource! {
 
     actions {
         read all_tickets {
+            order { created_at desc; };
             paged {
                 default_per_page 20;
                 max_per_page 50;
@@ -155,12 +156,14 @@ resource! {
         };
 
         read all_tickets_detail {
+            order { created_at desc; };
             load [reporter, assignee, label, comments];
         };
 
         read by_status {
             argument { status: TicketStatus };
             filter { status == arg(status) };
+            order { created_at desc; };
 
             paged {
                 default_per_page 20;
@@ -303,7 +306,7 @@ resource! {
 
 use cinderblock_core::Context;
 
-pub async fn seed(ctx: &Context) -> cinderblock_core::Result<()> {
+pub async fn seed(ctx: &Context) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     use crate::types::{TicketPriority, TicketStatus, UserRole};
 
     // Check if data already exists
@@ -407,7 +410,7 @@ pub async fn seed(ctx: &Context) -> cinderblock_core::Result<()> {
     let t1 = cinderblock_core::create::<Ticket, OpenTicket>(
         OpenTicketInput {
             subject: "Login page returns 500 error".to_string(),
-            description: "When trying to log in with valid credentials, the server returns a 500 Internal Server Error. Started happening after the latest deployment.".to_string(),
+            description: Some("When trying to log in with valid credentials, the server returns a 500 Internal Server Error. Started happening after the latest deployment.".to_string()),
             status: TicketStatus::Open,
             priority: TicketPriority::Urgent,
             reporter_id: dave.user_id,
@@ -421,7 +424,7 @@ pub async fn seed(ctx: &Context) -> cinderblock_core::Result<()> {
     let t2 = cinderblock_core::create::<Ticket, OpenTicket>(
         OpenTicketInput {
             subject: "Add dark mode support".to_string(),
-            description: "Users have been requesting dark mode for a while. Would be great to add it as a toggle in the settings page.".to_string(),
+            description: Some("Users have been requesting dark mode for a while. Would be great to add it as a toggle in the settings page.".to_string()),
             status: TicketStatus::Open,
             priority: TicketPriority::Medium,
             reporter_id: eve.user_id,
@@ -435,7 +438,7 @@ pub async fn seed(ctx: &Context) -> cinderblock_core::Result<()> {
     let t3 = cinderblock_core::create::<Ticket, OpenTicket>(
         OpenTicketInput {
             subject: "Update API documentation for v2 endpoints".to_string(),
-            description: "The API docs are outdated and still reference v1 endpoints. Need to update all examples and endpoint descriptions.".to_string(),
+            description: Some("The API docs are outdated and still reference v1 endpoints. Need to update all examples and endpoint descriptions.".to_string()),
             status: TicketStatus::InProgress,
             priority: TicketPriority::Low,
             reporter_id: alice.user_id,
@@ -449,7 +452,7 @@ pub async fn seed(ctx: &Context) -> cinderblock_core::Result<()> {
     let t4 = cinderblock_core::create::<Ticket, OpenTicket>(
         OpenTicketInput {
             subject: "Database connection pool exhaustion under load".to_string(),
-            description: "During peak hours the application becomes unresponsive. Logs show connection pool timeouts. Need to investigate pool sizing and query performance.".to_string(),
+            description: Some("During peak hours the application becomes unresponsive. Logs show connection pool timeouts. Need to investigate pool sizing and query performance.".to_string()),
             status: TicketStatus::InProgress,
             priority: TicketPriority::High,
             reporter_id: bob.user_id,
@@ -463,7 +466,7 @@ pub async fn seed(ctx: &Context) -> cinderblock_core::Result<()> {
     let t5 = cinderblock_core::create::<Ticket, OpenTicket>(
         OpenTicketInput {
             subject: "CSV export takes too long for large datasets".to_string(),
-            description: "Exporting more than 10k rows to CSV causes the browser to hang. Should implement server-side streaming.".to_string(),
+            description: None,
             status: TicketStatus::Open,
             priority: TicketPriority::Medium,
             reporter_id: dave.user_id,
@@ -477,7 +480,7 @@ pub async fn seed(ctx: &Context) -> cinderblock_core::Result<()> {
     let _t6 = cinderblock_core::create::<Ticket, OpenTicket>(
         OpenTicketInput {
             subject: "Password reset email not sending".to_string(),
-            description: "Customers report that they never receive the password reset email. SMTP logs look clean on our end.".to_string(),
+            description: Some("Customers report that they never receive the password reset email. SMTP logs look clean on our end.".to_string()),
             status: TicketStatus::Resolved,
             priority: TicketPriority::Urgent,
             reporter_id: eve.user_id,
@@ -491,7 +494,7 @@ pub async fn seed(ctx: &Context) -> cinderblock_core::Result<()> {
     let _t7 = cinderblock_core::create::<Ticket, OpenTicket>(
         OpenTicketInput {
             subject: "Migrate CI pipeline to GitHub Actions".to_string(),
-            description: "Our Jenkins server is EOL. Need to migrate all pipelines to GitHub Actions before the end of the quarter.".to_string(),
+            description: Some("Our Jenkins server is EOL. Need to migrate all pipelines to GitHub Actions before the end of the quarter.".to_string()),
             status: TicketStatus::Closed,
             priority: TicketPriority::Low,
             reporter_id: alice.user_id,

@@ -57,11 +57,11 @@ export default function NewTicket() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!subject.trim() || !description.trim()) return;
+    if (!subject.trim()) return;
     createMutation.mutate({
       body: {
         subject: subject.trim(),
-        description: description.trim(),
+        description: description.trim() || null,
         priority,
         status: "Open",
         reporter_id: reporterId,
@@ -115,13 +115,13 @@ export default function NewTicket() {
               htmlFor="description"
               className="block text-sm font-medium text-gray-700"
             >
-              Description
+              Description{" "}
+              <span className="text-gray-400 font-normal">(optional)</span>
             </label>
             <textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              required
               rows={5}
               placeholder="Detailed description of the issue..."
               className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
@@ -241,8 +241,7 @@ export default function NewTicket() {
               type="submit"
               disabled={
                 createMutation.isPending ||
-                !subject.trim() ||
-                !description.trim()
+                !subject.trim()
               }
               className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 disabled:opacity-50 transition-colors"
             >

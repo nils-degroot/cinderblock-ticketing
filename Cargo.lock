@@ -206,23 +206,24 @@ dependencies = [
 
 [[package]]
 name = "cinderblock-core"
-version = "0.4.0"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4f67963cd8acc82d3daf3e7a0eb50ce973aca9cafe94471dec1d889078159016"
+checksum = "87c397a2ad77efa5b1ed1c9c278f8a521620f6f28b2b876bb4bd19a2ac3fccd2"
 dependencies = [
  "cinderblock-core-macros",
  "dirs2",
  "serde",
  "serde_json",
+ "thiserror 2.0.18",
  "tokio",
  "uuid",
 ]
 
 [[package]]
 name = "cinderblock-core-macros"
-version = "0.4.0"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9ed5ad31cf5ae83d43f9b2e09bef5fd2d6ebb005a828931e0db25d99170563c8"
+checksum = "e2e47640158b5fb458970bb15e2df2665b792496c84b69516f5049b951690917"
 dependencies = [
  "cinderblock-extension-api",
  "convert_case",
@@ -234,9 +235,9 @@ dependencies = [
 
 [[package]]
 name = "cinderblock-extension-api"
-version = "0.4.0"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "21bbd212880dbda7ca1fcb5b50d9b1f96370188b78df183bf2b22859223fd96e"
+checksum = "d1d9e135cb1ac7cb6718c753ebe4918fa52f113c37e3ba1d27c9a67f826e1531"
 dependencies = [
  "convert_case",
  "proc-macro2",
@@ -246,9 +247,9 @@ dependencies = [
 
 [[package]]
 name = "cinderblock-json-api"
-version = "0.4.0"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c79a6bdef53d5379d0d258f2ff4aeed40fb37325ef8b0545575d635e2762a231"
+checksum = "0fd76adc3929696c7e3c2f885086eeea0e0347930c5b52f37257476bd75315ba"
 dependencies = [
  "axum",
  "cinderblock-core",
@@ -264,9 +265,9 @@ dependencies = [
 
 [[package]]
 name = "cinderblock-json-api-macros"
-version = "0.4.0"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cf371d8db0b16a845c358b0d0e11e0f7873f5556e220cb2ac2546f547f0bed8b"
+checksum = "185e39dca2dc275aef234021445d4c3a3de9278ed31487b6305d3e1d5c4dea9a"
 dependencies = [
  "cinderblock-extension-api",
  "convert_case",
@@ -277,9 +278,9 @@ dependencies = [
 
 [[package]]
 name = "cinderblock-sqlx"
-version = "0.4.0"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "202fcdeee1149a61e72c3f4793fd47d9ac7de25ed4256e5a9db61b781518e99a"
+checksum = "bbfc5f14933a57cdfb9f15b1b21469b111aa25982a009b7f9f6daa2b575372e4"
 dependencies = [
  "cinderblock-core",
  "cinderblock-sqlx-macros",
@@ -289,9 +290,9 @@ dependencies = [
 
 [[package]]
 name = "cinderblock-sqlx-macros"
-version = "0.4.0"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0d6e4e0db9a5b8086c3f2e16af0f5e42e924d407219ae060fa4c8f6f80513a9b"
+checksum = "3936eb228b9c1b5434616bf7503aaad9198d5a827975d14e8f0e79aaee28f91b"
 dependencies = [
  "cinderblock-extension-api",
  "convert_case",

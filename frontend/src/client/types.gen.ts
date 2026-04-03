@@ -45,7 +45,7 @@ export type Label = {
 
 export type OpenTicketInput = {
     assignee_id: string;
-    description: string;
+    description?: string | null;
     label_id: string;
     priority: 'Low' | 'Medium' | 'High' | 'Urgent';
     reporter_id: string;
@@ -60,7 +60,7 @@ export type ResolveTicketInput = {
 export type Ticket = {
     assignee_id: string;
     created_at: string;
-    description: string;
+    description?: string | null;
     label_id: string;
     priority: 'Low' | 'Medium' | 'High' | 'Urgent';
     reporter_id: string;
@@ -291,7 +291,7 @@ export type GetTicketAllTicketsResponses = {
         data: Array<{
             assignee_id: string;
             created_at: string;
-            description: string;
+            description?: string | null;
             label_id: string;
             priority: 'Low' | 'Medium' | 'High' | 'Urgent';
             reporter_id: string;
@@ -313,7 +313,7 @@ export type GetTicketAllTicketsResponse = GetTicketAllTicketsResponses[keyof Get
 export type PostTicketOpenTicketData = {
     body: {
         assignee_id: string;
-        description: string;
+        description?: string | null;
         label_id: string;
         priority: 'Low' | 'Medium' | 'High' | 'Urgent';
         reporter_id: string;
@@ -333,7 +333,7 @@ export type PostTicketOpenTicketResponses = {
         data: {
             assignee_id: string;
             created_at: string;
-            description: string;
+            description?: string | null;
             label_id: string;
             priority: 'Low' | 'Medium' | 'High' | 'Urgent';
             reporter_id: string;
@@ -363,7 +363,7 @@ export type GetTicketByAssigneeResponses = {
         data: Array<{
             assignee_id: string;
             created_at: string;
-            description: string;
+            description?: string | null;
             label_id: string;
             priority: 'Low' | 'Medium' | 'High' | 'Urgent';
             reporter_id: string;
@@ -393,7 +393,7 @@ export type GetTicketByPriorityResponses = {
         data: Array<{
             assignee_id: string;
             created_at: string;
-            description: string;
+            description?: string | null;
             label_id: string;
             priority: 'Low' | 'Medium' | 'High' | 'Urgent';
             reporter_id: string;
@@ -431,7 +431,7 @@ export type GetTicketByStatusResponses = {
         data: Array<{
             assignee_id: string;
             created_at: string;
-            description: string;
+            description?: string | null;
             label_id: string;
             priority: 'Low' | 'Medium' | 'High' | 'Urgent';
             reporter_id: string;
@@ -465,7 +465,7 @@ export type GetTicketAllTicketsDetailResponses = {
         data: Array<{
             assignee_id: string;
             created_at: string;
-            description: string;
+            description?: string | null;
             label_id: string;
             priority: 'Low' | 'Medium' | 'High' | 'Urgent';
             reporter_id: string;
@@ -515,7 +515,7 @@ export type PatchTicketAssignTicketResponses = {
         data: {
             assignee_id: string;
             created_at: string;
-            description: string;
+            description?: string | null;
             label_id: string;
             priority: 'Low' | 'Medium' | 'High' | 'Urgent';
             reporter_id: string;
@@ -547,7 +547,7 @@ export type PatchTicketCloseTicketResponses = {
         data: {
             assignee_id: string;
             created_at: string;
-            description: string;
+            description?: string | null;
             label_id: string;
             priority: 'Low' | 'Medium' | 'High' | 'Urgent';
             reporter_id: string;
@@ -579,7 +579,7 @@ export type PatchTicketUpdatePriorityResponses = {
         data: {
             assignee_id: string;
             created_at: string;
-            description: string;
+            description?: string | null;
             label_id: string;
             priority: 'Low' | 'Medium' | 'High' | 'Urgent';
             reporter_id: string;
@@ -611,7 +611,7 @@ export type PatchTicketResolveTicketResponses = {
         data: {
             assignee_id: string;
             created_at: string;
-            description: string;
+            description?: string | null;
             label_id: string;
             priority: 'Low' | 'Medium' | 'High' | 'Urgent';
             reporter_id: string;

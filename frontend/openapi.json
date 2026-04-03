@@ -1,1 +1,2219 @@
-{"openapi": "3.1.0", "info": {"title": "Cinderblock JSON API", "version": "0.1.0"}, "paths": {"/ticketing/support/comment/": {"get": {"tags": ["Comment"], "summary": "Read Comment via all_comments", "operationId": "get-comment-all-comments", "responses": {"200": {"description": "Filtered list of Comments", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "array", "items": {"type": "object", "required": ["comment_id", "ticket_id", "user_id", "body", "created_at"], "properties": {"body": {"type": "string"}, "comment_id": {"type": "string", "format": "uuid"}, "created_at": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}, "user_id": {"type": "string", "format": "uuid"}}}}}}}}}}}, "post": {"tags": ["Comment"], "summary": "Create Comment via add_comment", "operationId": "post-comment-add-comment", "requestBody": {"content": {"application/json": {"schema": {"type": "object", "required": ["ticket_id", "user_id", "body"], "properties": {"body": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}, "user_id": {"type": "string", "format": "uuid"}}}}}, "required": true}, "responses": {"201": {"description": "Comment created", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "object", "required": ["comment_id", "ticket_id", "user_id", "body", "created_at"], "properties": {"body": {"type": "string"}, "comment_id": {"type": "string", "format": "uuid"}, "created_at": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}, "user_id": {"type": "string", "format": "uuid"}}}}}}}}}}}, "/ticketing/support/comment/by-ticket": {"get": {"tags": ["Comment"], "summary": "Read Comment via by_ticket", "operationId": "get-comment-by-ticket", "parameters": [{"name": "ticket_id", "in": "query", "required": true, "schema": {"type": "string", "format": "uuid"}}], "responses": {"200": {"description": "Filtered list of Comments", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "array", "items": {"type": "object", "required": ["comment_id", "ticket_id", "user_id", "body", "created_at"], "properties": {"body": {"type": "string"}, "comment_id": {"type": "string", "format": "uuid"}, "created_at": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}, "user_id": {"type": "string", "format": "uuid"}}}}}}}}}}}}, "/ticketing/support/comment/by-ticket/with-user": {"get": {"tags": ["Comment"], "summary": "Read Comment via by_ticket_with_user", "operationId": "get-comment-by-ticket-with-user", "parameters": [{"name": "ticket_id", "in": "query", "required": true, "schema": {"type": "string", "format": "uuid"}}], "responses": {"200": {"description": "Filtered list of Comments", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "array", "items": {"type": "object", "required": ["comment_id", "ticket_id", "user_id", "body", "created_at"], "properties": {"body": {"type": "string"}, "comment_id": {"type": "string", "format": "uuid"}, "created_at": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}, "user_id": {"type": "string", "format": "uuid"}}}}}}}}}}}}, "/ticketing/support/comment/{primary_key}": {"delete": {"tags": ["Comment"], "summary": "Destroy Comment via delete_comment", "operationId": "delete-comment-delete-comment", "parameters": [{"name": "primary_key", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}], "responses": {"204": {"description": "Comment destroyed"}}}}, "/ticketing/support/label/": {"get": {"tags": ["Label"], "summary": "Read Label via all_labels", "operationId": "get-label-all-labels", "responses": {"200": {"description": "Filtered list of Labels", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "array", "items": {"type": "object", "required": ["label_id", "name", "color"], "properties": {"color": {"type": "string"}, "label_id": {"type": "string", "format": "uuid"}, "name": {"type": "string"}}}}}}}}}}}, "post": {"tags": ["Label"], "summary": "Create Label via create_label", "operationId": "post-label-create-label", "requestBody": {"content": {"application/json": {"schema": {"type": "object", "required": ["name", "color"], "properties": {"color": {"type": "string"}, "name": {"type": "string"}}}}}, "required": true}, "responses": {"201": {"description": "Label created", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "object", "required": ["label_id", "name", "color"], "properties": {"color": {"type": "string"}, "label_id": {"type": "string", "format": "uuid"}, "name": {"type": "string"}}}}}}}}}}}, "/ticketing/support/label/{primary_key}": {"delete": {"tags": ["Label"], "summary": "Destroy Label via delete_label", "operationId": "delete-label-delete-label", "parameters": [{"name": "primary_key", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}], "responses": {"204": {"description": "Label destroyed"}}}}, "/ticketing/support/ticket/": {"get": {"tags": ["Ticket"], "summary": "Paged read Ticket via all_tickets", "operationId": "get-ticket-all-tickets", "parameters": [{"name": "page", "in": "query", "description": "Page number (1-indexed, default: 1)", "required": false, "schema": {"type": "integer", "format": "int32"}}, {"name": "per_page", "in": "query", "description": "Items per page", "required": false, "schema": {"type": "integer", "format": "int32"}}], "responses": {"200": {"description": "Filtered list of Tickets", "content": {"application/json": {"schema": {"type": "object", "required": ["data", "meta"], "properties": {"data": {"type": "array", "items": {"type": "object", "required": ["ticket_id", "subject", "description", "status", "priority", "reporter_id", "assignee_id", "label_id", "created_at"], "properties": {"assignee_id": {"type": "string", "format": "uuid"}, "created_at": {"type": "string"}, "description": {"type": "string"}, "label_id": {"type": "string", "format": "uuid"}, "priority": {"type": "string", "enum": ["Low", "Medium", "High", "Urgent"]}, "reporter_id": {"type": "string", "format": "uuid"}, "status": {"type": "string", "enum": ["Open", "InProgress", "Resolved", "Closed"]}, "subject": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}}}}, "meta": {"type": "object", "required": ["page", "per_page", "total", "total_pages"], "properties": {"page": {"type": "integer", "format": "int32"}, "per_page": {"type": "integer", "format": "int32"}, "total": {"type": "integer", "format": "int64"}, "total_pages": {"type": "integer", "format": "int32"}}}}}}}}}}, "post": {"tags": ["Ticket"], "summary": "Create Ticket via open_ticket", "operationId": "post-ticket-open-ticket", "requestBody": {"content": {"application/json": {"schema": {"type": "object", "required": ["subject", "description", "status", "priority", "reporter_id", "assignee_id", "label_id"], "properties": {"assignee_id": {"type": "string", "format": "uuid"}, "description": {"type": "string"}, "label_id": {"type": "string", "format": "uuid"}, "priority": {"type": "string", "enum": ["Low", "Medium", "High", "Urgent"]}, "reporter_id": {"type": "string", "format": "uuid"}, "status": {"type": "string", "enum": ["Open", "InProgress", "Resolved", "Closed"]}, "subject": {"type": "string"}}}}}, "required": true}, "responses": {"201": {"description": "Ticket created", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "object", "required": ["ticket_id", "subject", "description", "status", "priority", "reporter_id", "assignee_id", "label_id", "created_at"], "properties": {"assignee_id": {"type": "string", "format": "uuid"}, "created_at": {"type": "string"}, "description": {"type": "string"}, "label_id": {"type": "string", "format": "uuid"}, "priority": {"type": "string", "enum": ["Low", "Medium", "High", "Urgent"]}, "reporter_id": {"type": "string", "format": "uuid"}, "status": {"type": "string", "enum": ["Open", "InProgress", "Resolved", "Closed"]}, "subject": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}}}}}}}}}}}, "/ticketing/support/ticket/by-assignee": {"get": {"tags": ["Ticket"], "summary": "Read Ticket via by_assignee", "operationId": "get-ticket-by-assignee", "parameters": [{"name": "assignee_id", "in": "query", "required": true, "schema": {"type": "string", "format": "uuid"}}], "responses": {"200": {"description": "Filtered list of Tickets", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "array", "items": {"type": "object", "required": ["ticket_id", "subject", "description", "status", "priority", "reporter_id", "assignee_id", "label_id", "created_at"], "properties": {"assignee_id": {"type": "string", "format": "uuid"}, "created_at": {"type": "string"}, "description": {"type": "string"}, "label_id": {"type": "string", "format": "uuid"}, "priority": {"type": "string", "enum": ["Low", "Medium", "High", "Urgent"]}, "reporter_id": {"type": "string", "format": "uuid"}, "status": {"type": "string", "enum": ["Open", "InProgress", "Resolved", "Closed"]}, "subject": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}}}}}}}}}}}}, "/ticketing/support/ticket/by-priority": {"get": {"tags": ["Ticket"], "summary": "Read Ticket via by_priority", "operationId": "get-ticket-by-priority", "parameters": [{"name": "priority", "in": "query", "required": true, "schema": {"type": "string", "enum": ["Low", "Medium", "High", "Urgent"]}}], "responses": {"200": {"description": "Filtered list of Tickets", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "array", "items": {"type": "object", "required": ["ticket_id", "subject", "description", "status", "priority", "reporter_id", "assignee_id", "label_id", "created_at"], "properties": {"assignee_id": {"type": "string", "format": "uuid"}, "created_at": {"type": "string"}, "description": {"type": "string"}, "label_id": {"type": "string", "format": "uuid"}, "priority": {"type": "string", "enum": ["Low", "Medium", "High", "Urgent"]}, "reporter_id": {"type": "string", "format": "uuid"}, "status": {"type": "string", "enum": ["Open", "InProgress", "Resolved", "Closed"]}, "subject": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}}}}}}}}}}}}, "/ticketing/support/ticket/by-status": {"get": {"tags": ["Ticket"], "summary": "Paged read Ticket via by_status", "operationId": "get-ticket-by-status", "parameters": [{"name": "status", "in": "query", "required": true, "schema": {"type": "string", "enum": ["Open", "InProgress", "Resolved", "Closed"]}}, {"name": "page", "in": "query", "description": "Page number (1-indexed, default: 1)", "required": false, "schema": {"type": "integer", "format": "int32"}}, {"name": "per_page", "in": "query", "description": "Items per page", "required": false, "schema": {"type": "integer", "format": "int32"}}], "responses": {"200": {"description": "Filtered list of Tickets", "content": {"application/json": {"schema": {"type": "object", "required": ["data", "meta"], "properties": {"data": {"type": "array", "items": {"type": "object", "required": ["ticket_id", "subject", "description", "status", "priority", "reporter_id", "assignee_id", "label_id", "created_at"], "properties": {"assignee_id": {"type": "string", "format": "uuid"}, "created_at": {"type": "string"}, "description": {"type": "string"}, "label_id": {"type": "string", "format": "uuid"}, "priority": {"type": "string", "enum": ["Low", "Medium", "High", "Urgent"]}, "reporter_id": {"type": "string", "format": "uuid"}, "status": {"type": "string", "enum": ["Open", "InProgress", "Resolved", "Closed"]}, "subject": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}}}}, "meta": {"type": "object", "required": ["page", "per_page", "total", "total_pages"], "properties": {"page": {"type": "integer", "format": "int32"}, "per_page": {"type": "integer", "format": "int32"}, "total": {"type": "integer", "format": "int64"}, "total_pages": {"type": "integer", "format": "int32"}}}}}}}}}}}, "/ticketing/support/ticket/detail": {"get": {"tags": ["Ticket"], "summary": "Read Ticket via all_tickets_detail", "operationId": "get-ticket-all-tickets-detail", "responses": {"200": {"description": "Filtered list of Tickets", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "array", "items": {"type": "object", "required": ["ticket_id", "subject", "description", "status", "priority", "reporter_id", "assignee_id", "label_id", "created_at"], "properties": {"assignee_id": {"type": "string", "format": "uuid"}, "created_at": {"type": "string"}, "description": {"type": "string"}, "label_id": {"type": "string", "format": "uuid"}, "priority": {"type": "string", "enum": ["Low", "Medium", "High", "Urgent"]}, "reporter_id": {"type": "string", "format": "uuid"}, "status": {"type": "string", "enum": ["Open", "InProgress", "Resolved", "Closed"]}, "subject": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}}}}}}}}}}}}, "/ticketing/support/ticket/{primary_key}": {"delete": {"tags": ["Ticket"], "summary": "Destroy Ticket via delete_ticket", "operationId": "delete-ticket-delete-ticket", "parameters": [{"name": "primary_key", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}], "responses": {"204": {"description": "Ticket destroyed"}}}}, "/ticketing/support/ticket/{primary_key}/assign": {"patch": {"tags": ["Ticket"], "summary": "Update Ticket via assign_ticket", "operationId": "patch-ticket-assign-ticket", "parameters": [{"name": "primary_key", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}], "requestBody": {"content": {"application/json": {"schema": {"type": "object", "required": ["assignee_id"], "properties": {"assignee_id": {"type": "string", "format": "uuid"}}}}}, "required": true}, "responses": {"200": {"description": "Ticket updated", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "object", "required": ["ticket_id", "subject", "description", "status", "priority", "reporter_id", "assignee_id", "label_id", "created_at"], "properties": {"assignee_id": {"type": "string", "format": "uuid"}, "created_at": {"type": "string"}, "description": {"type": "string"}, "label_id": {"type": "string", "format": "uuid"}, "priority": {"type": "string", "enum": ["Low", "Medium", "High", "Urgent"]}, "reporter_id": {"type": "string", "format": "uuid"}, "status": {"type": "string", "enum": ["Open", "InProgress", "Resolved", "Closed"]}, "subject": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}}}}}}}}}}}, "/ticketing/support/ticket/{primary_key}/close": {"patch": {"tags": ["Ticket"], "summary": "Update Ticket via close_ticket", "operationId": "patch-ticket-close-ticket", "parameters": [{"name": "primary_key", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}], "requestBody": {"content": {"application/json": {"schema": {"type": "object"}}}, "required": false}, "responses": {"200": {"description": "Ticket updated", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "object", "required": ["ticket_id", "subject", "description", "status", "priority", "reporter_id", "assignee_id", "label_id", "created_at"], "properties": {"assignee_id": {"type": "string", "format": "uuid"}, "created_at": {"type": "string"}, "description": {"type": "string"}, "label_id": {"type": "string", "format": "uuid"}, "priority": {"type": "string", "enum": ["Low", "Medium", "High", "Urgent"]}, "reporter_id": {"type": "string", "format": "uuid"}, "status": {"type": "string", "enum": ["Open", "InProgress", "Resolved", "Closed"]}, "subject": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}}}}}}}}}}}, "/ticketing/support/ticket/{primary_key}/priority": {"patch": {"tags": ["Ticket"], "summary": "Update Ticket via update_priority", "operationId": "patch-ticket-update-priority", "parameters": [{"name": "primary_key", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}], "requestBody": {"content": {"application/json": {"schema": {"type": "object", "required": ["priority"], "properties": {"priority": {"type": "string", "enum": ["Low", "Medium", "High", "Urgent"]}}}}}, "required": true}, "responses": {"200": {"description": "Ticket updated", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "object", "required": ["ticket_id", "subject", "description", "status", "priority", "reporter_id", "assignee_id", "label_id", "created_at"], "properties": {"assignee_id": {"type": "string", "format": "uuid"}, "created_at": {"type": "string"}, "description": {"type": "string"}, "label_id": {"type": "string", "format": "uuid"}, "priority": {"type": "string", "enum": ["Low", "Medium", "High", "Urgent"]}, "reporter_id": {"type": "string", "format": "uuid"}, "status": {"type": "string", "enum": ["Open", "InProgress", "Resolved", "Closed"]}, "subject": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}}}}}}}}}}}, "/ticketing/support/ticket/{primary_key}/resolve": {"patch": {"tags": ["Ticket"], "summary": "Update Ticket via resolve_ticket", "operationId": "patch-ticket-resolve-ticket", "parameters": [{"name": "primary_key", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}}], "requestBody": {"content": {"application/json": {"schema": {"type": "object"}}}, "required": false}, "responses": {"200": {"description": "Ticket updated", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "object", "required": ["ticket_id", "subject", "description", "status", "priority", "reporter_id", "assignee_id", "label_id", "created_at"], "properties": {"assignee_id": {"type": "string", "format": "uuid"}, "created_at": {"type": "string"}, "description": {"type": "string"}, "label_id": {"type": "string", "format": "uuid"}, "priority": {"type": "string", "enum": ["Low", "Medium", "High", "Urgent"]}, "reporter_id": {"type": "string", "format": "uuid"}, "status": {"type": "string", "enum": ["Open", "InProgress", "Resolved", "Closed"]}, "subject": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}}}}}}}}}}}, "/ticketing/support/user/": {"get": {"tags": ["User"], "summary": "Read User via all_users", "operationId": "get-user-all-users", "responses": {"200": {"description": "Filtered list of Users", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "array", "items": {"type": "object", "required": ["user_id", "name", "email", "role"], "properties": {"email": {"type": "string"}, "name": {"type": "string"}, "role": {"type": "string", "enum": ["Admin", "Agent", "Customer"]}, "user_id": {"type": "string", "format": "uuid"}}}}}}}}}}}, "post": {"tags": ["User"], "summary": "Create User via create_user", "operationId": "post-user-create-user", "requestBody": {"content": {"application/json": {"schema": {"type": "object", "required": ["name", "email", "role"], "properties": {"email": {"type": "string"}, "name": {"type": "string"}, "role": {"type": "string", "enum": ["Admin", "Agent", "Customer"]}}}}}, "required": true}, "responses": {"201": {"description": "User created", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "object", "required": ["user_id", "name", "email", "role"], "properties": {"email": {"type": "string"}, "name": {"type": "string"}, "role": {"type": "string", "enum": ["Admin", "Agent", "Customer"]}, "user_id": {"type": "string", "format": "uuid"}}}}}}}}}}}, "/ticketing/support/user/agents": {"get": {"tags": ["User"], "summary": "Read User via agents", "operationId": "get-user-agents", "responses": {"200": {"description": "Filtered list of Users", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "array", "items": {"type": "object", "required": ["user_id", "name", "email", "role"], "properties": {"email": {"type": "string"}, "name": {"type": "string"}, "role": {"type": "string", "enum": ["Admin", "Agent", "Customer"]}, "user_id": {"type": "string", "format": "uuid"}}}}}}}}}}}}, "/ticketing/support/user/with-tickets": {"get": {"tags": ["User"], "summary": "Read User via all_users_with_tickets", "operationId": "get-user-all-users-with-tickets", "responses": {"200": {"description": "Filtered list of Users", "content": {"application/json": {"schema": {"type": "object", "required": ["data"], "properties": {"data": {"type": "array", "items": {"type": "object", "required": ["user_id", "name", "email", "role"], "properties": {"email": {"type": "string"}, "name": {"type": "string"}, "role": {"type": "string", "enum": ["Admin", "Agent", "Customer"]}, "user_id": {"type": "string", "format": "uuid"}}}}}}}}}}}}}, "components": {"schemas": {"AddCommentInput": {"type": "object", "required": ["ticket_id", "user_id", "body"], "properties": {"body": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}, "user_id": {"type": "string", "format": "uuid"}}}, "AssignTicketInput": {"type": "object", "required": ["assignee_id"], "properties": {"assignee_id": {"type": "string", "format": "uuid"}}}, "CloseTicketInput": {"type": "object"}, "Comment": {"type": "object", "required": ["comment_id", "ticket_id", "user_id", "body", "created_at"], "properties": {"body": {"type": "string"}, "comment_id": {"type": "string", "format": "uuid"}, "created_at": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}, "user_id": {"type": "string", "format": "uuid"}}}, "CreateLabelInput": {"type": "object", "required": ["name", "color"], "properties": {"color": {"type": "string"}, "name": {"type": "string"}}}, "CreateUserInput": {"type": "object", "required": ["name", "email", "role"], "properties": {"email": {"type": "string"}, "name": {"type": "string"}, "role": {"type": "string", "enum": ["Admin", "Agent", "Customer"]}}}, "Label": {"type": "object", "required": ["label_id", "name", "color"], "properties": {"color": {"type": "string"}, "label_id": {"type": "string", "format": "uuid"}, "name": {"type": "string"}}}, "OpenTicketInput": {"type": "object", "required": ["subject", "description", "status", "priority", "reporter_id", "assignee_id", "label_id"], "properties": {"assignee_id": {"type": "string", "format": "uuid"}, "description": {"type": "string"}, "label_id": {"type": "string", "format": "uuid"}, "priority": {"type": "string", "enum": ["Low", "Medium", "High", "Urgent"]}, "reporter_id": {"type": "string", "format": "uuid"}, "status": {"type": "string", "enum": ["Open", "InProgress", "Resolved", "Closed"]}, "subject": {"type": "string"}}}, "ResolveTicketInput": {"type": "object"}, "Ticket": {"type": "object", "required": ["ticket_id", "subject", "description", "status", "priority", "reporter_id", "assignee_id", "label_id", "created_at"], "properties": {"assignee_id": {"type": "string", "format": "uuid"}, "created_at": {"type": "string"}, "description": {"type": "string"}, "label_id": {"type": "string", "format": "uuid"}, "priority": {"type": "string", "enum": ["Low", "Medium", "High", "Urgent"]}, "reporter_id": {"type": "string", "format": "uuid"}, "status": {"type": "string", "enum": ["Open", "InProgress", "Resolved", "Closed"]}, "subject": {"type": "string"}, "ticket_id": {"type": "string", "format": "uuid"}}}, "UpdatePriorityInput": {"type": "object", "required": ["priority"], "properties": {"priority": {"type": "string", "enum": ["Low", "Medium", "High", "Urgent"]}}}, "User": {"type": "object", "required": ["user_id", "name", "email", "role"], "properties": {"email": {"type": "string"}, "name": {"type": "string"}, "role": {"type": "string", "enum": ["Admin", "Agent", "Customer"]}, "user_id": {"type": "string", "format": "uuid"}}}}}}
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Cinderblock JSON API",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/ticketing/support/comment/": {
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Read Comment via all_comments",
+        "operationId": "get-comment-all-comments",
+        "responses": {
+          "200": {
+            "description": "Filtered list of Comments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "comment_id",
+                          "ticket_id",
+                          "user_id",
+                          "body",
+                          "created_at"
+                        ],
+                        "properties": {
+                          "body": {
+                            "type": "string"
+                          },
+                          "comment_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "created_at": {
+                            "type": "string"
+                          },
+                          "ticket_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "user_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Create Comment via add_comment",
+        "operationId": "post-comment-add-comment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "ticket_id",
+                  "user_id",
+                  "body"
+                ],
+                "properties": {
+                  "body": {
+                    "type": "string"
+                  },
+                  "ticket_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "user_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Comment created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "comment_id",
+                        "ticket_id",
+                        "user_id",
+                        "body",
+                        "created_at"
+                      ],
+                      "properties": {
+                        "body": {
+                          "type": "string"
+                        },
+                        "comment_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "created_at": {
+                          "type": "string"
+                        },
+                        "ticket_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "user_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ticketing/support/comment/by-ticket": {
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Read Comment via by_ticket",
+        "operationId": "get-comment-by-ticket",
+        "parameters": [
+          {
+            "name": "ticket_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filtered list of Comments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "comment_id",
+                          "ticket_id",
+                          "user_id",
+                          "body",
+                          "created_at"
+                        ],
+                        "properties": {
+                          "body": {
+                            "type": "string"
+                          },
+                          "comment_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "created_at": {
+                            "type": "string"
+                          },
+                          "ticket_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "user_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ticketing/support/comment/by-ticket/with-user": {
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Read Comment via by_ticket_with_user",
+        "operationId": "get-comment-by-ticket-with-user",
+        "parameters": [
+          {
+            "name": "ticket_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filtered list of Comments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "comment_id",
+                          "ticket_id",
+                          "user_id",
+                          "body",
+                          "created_at"
+                        ],
+                        "properties": {
+                          "body": {
+                            "type": "string"
+                          },
+                          "comment_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "created_at": {
+                            "type": "string"
+                          },
+                          "ticket_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "user_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ticketing/support/comment/{primary_key}": {
+      "delete": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Destroy Comment via delete_comment",
+        "operationId": "delete-comment-delete-comment",
+        "parameters": [
+          {
+            "name": "primary_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Comment destroyed"
+          }
+        }
+      }
+    },
+    "/ticketing/support/label/": {
+      "get": {
+        "tags": [
+          "Label"
+        ],
+        "summary": "Read Label via all_labels",
+        "operationId": "get-label-all-labels",
+        "responses": {
+          "200": {
+            "description": "Filtered list of Labels",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "label_id",
+                          "name",
+                          "color"
+                        ],
+                        "properties": {
+                          "color": {
+                            "type": "string"
+                          },
+                          "label_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Label"
+        ],
+        "summary": "Create Label via create_label",
+        "operationId": "post-label-create-label",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "color"
+                ],
+                "properties": {
+                  "color": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Label created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "label_id",
+                        "name",
+                        "color"
+                      ],
+                      "properties": {
+                        "color": {
+                          "type": "string"
+                        },
+                        "label_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ticketing/support/label/{primary_key}": {
+      "delete": {
+        "tags": [
+          "Label"
+        ],
+        "summary": "Destroy Label via delete_label",
+        "operationId": "delete-label-delete-label",
+        "parameters": [
+          {
+            "name": "primary_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Label destroyed"
+          }
+        }
+      }
+    },
+    "/ticketing/support/ticket/": {
+      "get": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Paged read Ticket via all_tickets",
+        "operationId": "get-ticket-all-tickets",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (1-indexed, default: 1)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filtered list of Tickets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "ticket_id",
+                          "subject",
+                          "status",
+                          "priority",
+                          "reporter_id",
+                          "assignee_id",
+                          "label_id",
+                          "created_at"
+                        ],
+                        "properties": {
+                          "assignee_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "created_at": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "label_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "priority": {
+                            "type": "string",
+                            "enum": [
+                              "Low",
+                              "Medium",
+                              "High",
+                              "Urgent"
+                            ]
+                          },
+                          "reporter_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "Open",
+                              "InProgress",
+                              "Resolved",
+                              "Closed"
+                            ]
+                          },
+                          "subject": {
+                            "type": "string"
+                          },
+                          "ticket_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          }
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "required": [
+                        "page",
+                        "per_page",
+                        "total",
+                        "total_pages"
+                      ],
+                      "properties": {
+                        "page": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "per_page": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "total": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "total_pages": {
+                          "type": "integer",
+                          "format": "int32"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Create Ticket via open_ticket",
+        "operationId": "post-ticket-open-ticket",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "subject",
+                  "status",
+                  "priority",
+                  "reporter_id",
+                  "assignee_id",
+                  "label_id"
+                ],
+                "properties": {
+                  "assignee_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "description": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "label_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "priority": {
+                    "type": "string",
+                    "enum": [
+                      "Low",
+                      "Medium",
+                      "High",
+                      "Urgent"
+                    ]
+                  },
+                  "reporter_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "Open",
+                      "InProgress",
+                      "Resolved",
+                      "Closed"
+                    ]
+                  },
+                  "subject": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Ticket created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "ticket_id",
+                        "subject",
+                        "status",
+                        "priority",
+                        "reporter_id",
+                        "assignee_id",
+                        "label_id",
+                        "created_at"
+                      ],
+                      "properties": {
+                        "assignee_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "created_at": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "label_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "priority": {
+                          "type": "string",
+                          "enum": [
+                            "Low",
+                            "Medium",
+                            "High",
+                            "Urgent"
+                          ]
+                        },
+                        "reporter_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "Open",
+                            "InProgress",
+                            "Resolved",
+                            "Closed"
+                          ]
+                        },
+                        "subject": {
+                          "type": "string"
+                        },
+                        "ticket_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ticketing/support/ticket/by-assignee": {
+      "get": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Read Ticket via by_assignee",
+        "operationId": "get-ticket-by-assignee",
+        "parameters": [
+          {
+            "name": "assignee_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filtered list of Tickets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "ticket_id",
+                          "subject",
+                          "status",
+                          "priority",
+                          "reporter_id",
+                          "assignee_id",
+                          "label_id",
+                          "created_at"
+                        ],
+                        "properties": {
+                          "assignee_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "created_at": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "label_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "priority": {
+                            "type": "string",
+                            "enum": [
+                              "Low",
+                              "Medium",
+                              "High",
+                              "Urgent"
+                            ]
+                          },
+                          "reporter_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "Open",
+                              "InProgress",
+                              "Resolved",
+                              "Closed"
+                            ]
+                          },
+                          "subject": {
+                            "type": "string"
+                          },
+                          "ticket_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ticketing/support/ticket/by-priority": {
+      "get": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Read Ticket via by_priority",
+        "operationId": "get-ticket-by-priority",
+        "parameters": [
+          {
+            "name": "priority",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Low",
+                "Medium",
+                "High",
+                "Urgent"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filtered list of Tickets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "ticket_id",
+                          "subject",
+                          "status",
+                          "priority",
+                          "reporter_id",
+                          "assignee_id",
+                          "label_id",
+                          "created_at"
+                        ],
+                        "properties": {
+                          "assignee_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "created_at": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "label_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "priority": {
+                            "type": "string",
+                            "enum": [
+                              "Low",
+                              "Medium",
+                              "High",
+                              "Urgent"
+                            ]
+                          },
+                          "reporter_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "Open",
+                              "InProgress",
+                              "Resolved",
+                              "Closed"
+                            ]
+                          },
+                          "subject": {
+                            "type": "string"
+                          },
+                          "ticket_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ticketing/support/ticket/by-status": {
+      "get": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Paged read Ticket via by_status",
+        "operationId": "get-ticket-by-status",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Open",
+                "InProgress",
+                "Resolved",
+                "Closed"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (1-indexed, default: 1)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filtered list of Tickets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "ticket_id",
+                          "subject",
+                          "status",
+                          "priority",
+                          "reporter_id",
+                          "assignee_id",
+                          "label_id",
+                          "created_at"
+                        ],
+                        "properties": {
+                          "assignee_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "created_at": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "label_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "priority": {
+                            "type": "string",
+                            "enum": [
+                              "Low",
+                              "Medium",
+                              "High",
+                              "Urgent"
+                            ]
+                          },
+                          "reporter_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "Open",
+                              "InProgress",
+                              "Resolved",
+                              "Closed"
+                            ]
+                          },
+                          "subject": {
+                            "type": "string"
+                          },
+                          "ticket_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          }
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "required": [
+                        "page",
+                        "per_page",
+                        "total",
+                        "total_pages"
+                      ],
+                      "properties": {
+                        "page": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "per_page": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "total": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "total_pages": {
+                          "type": "integer",
+                          "format": "int32"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ticketing/support/ticket/detail": {
+      "get": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Read Ticket via all_tickets_detail",
+        "operationId": "get-ticket-all-tickets-detail",
+        "responses": {
+          "200": {
+            "description": "Filtered list of Tickets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "ticket_id",
+                          "subject",
+                          "status",
+                          "priority",
+                          "reporter_id",
+                          "assignee_id",
+                          "label_id",
+                          "created_at"
+                        ],
+                        "properties": {
+                          "assignee_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "created_at": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "label_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "priority": {
+                            "type": "string",
+                            "enum": [
+                              "Low",
+                              "Medium",
+                              "High",
+                              "Urgent"
+                            ]
+                          },
+                          "reporter_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "Open",
+                              "InProgress",
+                              "Resolved",
+                              "Closed"
+                            ]
+                          },
+                          "subject": {
+                            "type": "string"
+                          },
+                          "ticket_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ticketing/support/ticket/{primary_key}": {
+      "delete": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Destroy Ticket via delete_ticket",
+        "operationId": "delete-ticket-delete-ticket",
+        "parameters": [
+          {
+            "name": "primary_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ticket destroyed"
+          }
+        }
+      }
+    },
+    "/ticketing/support/ticket/{primary_key}/assign": {
+      "patch": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Update Ticket via assign_ticket",
+        "operationId": "patch-ticket-assign-ticket",
+        "parameters": [
+          {
+            "name": "primary_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "assignee_id"
+                ],
+                "properties": {
+                  "assignee_id": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "ticket_id",
+                        "subject",
+                        "status",
+                        "priority",
+                        "reporter_id",
+                        "assignee_id",
+                        "label_id",
+                        "created_at"
+                      ],
+                      "properties": {
+                        "assignee_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "created_at": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "label_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "priority": {
+                          "type": "string",
+                          "enum": [
+                            "Low",
+                            "Medium",
+                            "High",
+                            "Urgent"
+                          ]
+                        },
+                        "reporter_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "Open",
+                            "InProgress",
+                            "Resolved",
+                            "Closed"
+                          ]
+                        },
+                        "subject": {
+                          "type": "string"
+                        },
+                        "ticket_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ticketing/support/ticket/{primary_key}/close": {
+      "patch": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Update Ticket via close_ticket",
+        "operationId": "patch-ticket-close-ticket",
+        "parameters": [
+          {
+            "name": "primary_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "ticket_id",
+                        "subject",
+                        "status",
+                        "priority",
+                        "reporter_id",
+                        "assignee_id",
+                        "label_id",
+                        "created_at"
+                      ],
+                      "properties": {
+                        "assignee_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "created_at": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "label_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "priority": {
+                          "type": "string",
+                          "enum": [
+                            "Low",
+                            "Medium",
+                            "High",
+                            "Urgent"
+                          ]
+                        },
+                        "reporter_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "Open",
+                            "InProgress",
+                            "Resolved",
+                            "Closed"
+                          ]
+                        },
+                        "subject": {
+                          "type": "string"
+                        },
+                        "ticket_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ticketing/support/ticket/{primary_key}/priority": {
+      "patch": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Update Ticket via update_priority",
+        "operationId": "patch-ticket-update-priority",
+        "parameters": [
+          {
+            "name": "primary_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "priority"
+                ],
+                "properties": {
+                  "priority": {
+                    "type": "string",
+                    "enum": [
+                      "Low",
+                      "Medium",
+                      "High",
+                      "Urgent"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "ticket_id",
+                        "subject",
+                        "status",
+                        "priority",
+                        "reporter_id",
+                        "assignee_id",
+                        "label_id",
+                        "created_at"
+                      ],
+                      "properties": {
+                        "assignee_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "created_at": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "label_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "priority": {
+                          "type": "string",
+                          "enum": [
+                            "Low",
+                            "Medium",
+                            "High",
+                            "Urgent"
+                          ]
+                        },
+                        "reporter_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "Open",
+                            "InProgress",
+                            "Resolved",
+                            "Closed"
+                          ]
+                        },
+                        "subject": {
+                          "type": "string"
+                        },
+                        "ticket_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ticketing/support/ticket/{primary_key}/resolve": {
+      "patch": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Update Ticket via resolve_ticket",
+        "operationId": "patch-ticket-resolve-ticket",
+        "parameters": [
+          {
+            "name": "primary_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "ticket_id",
+                        "subject",
+                        "status",
+                        "priority",
+                        "reporter_id",
+                        "assignee_id",
+                        "label_id",
+                        "created_at"
+                      ],
+                      "properties": {
+                        "assignee_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "created_at": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "label_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "priority": {
+                          "type": "string",
+                          "enum": [
+                            "Low",
+                            "Medium",
+                            "High",
+                            "Urgent"
+                          ]
+                        },
+                        "reporter_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "Open",
+                            "InProgress",
+                            "Resolved",
+                            "Closed"
+                          ]
+                        },
+                        "subject": {
+                          "type": "string"
+                        },
+                        "ticket_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ticketing/support/user/": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Read User via all_users",
+        "operationId": "get-user-all-users",
+        "responses": {
+          "200": {
+            "description": "Filtered list of Users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "user_id",
+                          "name",
+                          "email",
+                          "role"
+                        ],
+                        "properties": {
+                          "email": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "role": {
+                            "type": "string",
+                            "enum": [
+                              "Admin",
+                              "Agent",
+                              "Customer"
+                            ]
+                          },
+                          "user_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Create User via create_user",
+        "operationId": "post-user-create-user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "role"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "Admin",
+                      "Agent",
+                      "Customer"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "User created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "user_id",
+                        "name",
+                        "email",
+                        "role"
+                      ],
+                      "properties": {
+                        "email": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "role": {
+                          "type": "string",
+                          "enum": [
+                            "Admin",
+                            "Agent",
+                            "Customer"
+                          ]
+                        },
+                        "user_id": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ticketing/support/user/agents": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Read User via agents",
+        "operationId": "get-user-agents",
+        "responses": {
+          "200": {
+            "description": "Filtered list of Users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "user_id",
+                          "name",
+                          "email",
+                          "role"
+                        ],
+                        "properties": {
+                          "email": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "role": {
+                            "type": "string",
+                            "enum": [
+                              "Admin",
+                              "Agent",
+                              "Customer"
+                            ]
+                          },
+                          "user_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ticketing/support/user/with-tickets": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Read User via all_users_with_tickets",
+        "operationId": "get-user-all-users-with-tickets",
+        "responses": {
+          "200": {
+            "description": "Filtered list of Users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "user_id",
+                          "name",
+                          "email",
+                          "role"
+                        ],
+                        "properties": {
+                          "email": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "role": {
+                            "type": "string",
+                            "enum": [
+                              "Admin",
+                              "Agent",
+                              "Customer"
+                            ]
+                          },
+                          "user_id": {
+                            "type": "string",
+                            "format": "uuid"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddCommentInput": {
+        "type": "object",
+        "required": [
+          "ticket_id",
+          "user_id",
+          "body"
+        ],
+        "properties": {
+          "body": {
+            "type": "string"
+          },
+          "ticket_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "AssignTicketInput": {
+        "type": "object",
+        "required": [
+          "assignee_id"
+        ],
+        "properties": {
+          "assignee_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "CloseTicketInput": {
+        "type": "object"
+      },
+      "Comment": {
+        "type": "object",
+        "required": [
+          "comment_id",
+          "ticket_id",
+          "user_id",
+          "body",
+          "created_at"
+        ],
+        "properties": {
+          "body": {
+            "type": "string"
+          },
+          "comment_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "ticket_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "CreateLabelInput": {
+        "type": "object",
+        "required": [
+          "name",
+          "color"
+        ],
+        "properties": {
+          "color": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateUserInput": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "role"
+        ],
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "Admin",
+              "Agent",
+              "Customer"
+            ]
+          }
+        }
+      },
+      "Label": {
+        "type": "object",
+        "required": [
+          "label_id",
+          "name",
+          "color"
+        ],
+        "properties": {
+          "color": {
+            "type": "string"
+          },
+          "label_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "OpenTicketInput": {
+        "type": "object",
+        "required": [
+          "subject",
+          "status",
+          "priority",
+          "reporter_id",
+          "assignee_id",
+          "label_id"
+        ],
+        "properties": {
+          "assignee_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "label_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "Low",
+              "Medium",
+              "High",
+              "Urgent"
+            ]
+          },
+          "reporter_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Open",
+              "InProgress",
+              "Resolved",
+              "Closed"
+            ]
+          },
+          "subject": {
+            "type": "string"
+          }
+        }
+      },
+      "ResolveTicketInput": {
+        "type": "object"
+      },
+      "Ticket": {
+        "type": "object",
+        "required": [
+          "ticket_id",
+          "subject",
+          "status",
+          "priority",
+          "reporter_id",
+          "assignee_id",
+          "label_id",
+          "created_at"
+        ],
+        "properties": {
+          "assignee_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "label_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "Low",
+              "Medium",
+              "High",
+              "Urgent"
+            ]
+          },
+          "reporter_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Open",
+              "InProgress",
+              "Resolved",
+              "Closed"
+            ]
+          },
+          "subject": {
+            "type": "string"
+          },
+          "ticket_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "UpdatePriorityInput": {
+        "type": "object",
+        "required": [
+          "priority"
+        ],
+        "properties": {
+          "priority": {
+            "type": "string",
+            "enum": [
+              "Low",
+              "Medium",
+              "High",
+              "Urgent"
+            ]
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "required": [
+          "user_id",
+          "name",
+          "email",
+          "role"
+        ],
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "Admin",
+              "Agent",
+              "Customer"
+            ]
+          },
+          "user_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      }
+    }
+  }
+}

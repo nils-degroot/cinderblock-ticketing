@@ -7,7 +7,7 @@ use cinderblock_sqlx::sqlite::SqliteDataLayer;
 use tower_http::cors::{Any, CorsLayer};
 
 #[tokio::main]
-async fn main() -> cinderblock_core::Result<()> {
+async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     tracing_subscriber::fmt::init();
 
     let dl = SqliteDataLayer::new("sqlite:ticketing.db?mode=rwc").await?;
