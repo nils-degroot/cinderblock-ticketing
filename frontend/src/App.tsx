@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import TicketList from "./pages/TicketList";
 import TicketDetail from "./pages/TicketDetail";
 import NewTicket from "./pages/NewTicket";
+import TeamManagement from "./pages/TeamManagement";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="tickets" element={<TicketList />} />
         <Route path="tickets/new" element={<NewTicket />} />
         <Route path="tickets/:id" element={<TicketDetail />} />
+        <Route path="team" element={<TeamManagement />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   getTicketAllTicketsOptions,
   getCommentByTicketOptions,
@@ -32,6 +32,7 @@ const priorityColors: Record<string, string> = {
 export default function TicketDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [commentBody, setCommentBody] = useState("");
 
@@ -90,7 +91,10 @@ export default function TicketDetail() {
 
   const deleteMutation = useMutation({
     ...deleteTicketDeleteTicketMutation(),
-    onSuccess: () => navigate("/tickets"),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: getTicketAllTicketsOptions().queryKey });
+      navigate("/tickets");
+    },
   });
 
   const isLoading =
@@ -165,6 +169,7 @@ export default function TicketDetail() {
               onClick={() =>
                 resolveMutation.mutate({
                   path: { primary_key: ticket.ticket_id },
+                  body: {},
                 })
               }
               disabled={resolveMutation.isPending}
@@ -178,6 +183,7 @@ export default function TicketDetail() {
               onClick={() =>
                 resolveMutation.mutate({
                   path: { primary_key: ticket.ticket_id },
+                  body: {},
                 })
               }
               disabled={resolveMutation.isPending}
@@ -193,6 +199,7 @@ export default function TicketDetail() {
               onClick={() =>
                 closeMutation.mutate({
                   path: { primary_key: ticket.ticket_id },
+                  body: {},
                 })
               }
               disabled={closeMutation.isPending}

@@ -44,7 +44,7 @@ pub async fn setup(dl: &SqliteDataLayer) -> cinderblock_core::Result<()> {
     sqlx::query(
         "CREATE TABLE IF NOT EXISTS comments (
             comment_id TEXT NOT NULL PRIMARY KEY,
-            ticket_id TEXT NOT NULL REFERENCES tickets(ticket_id),
+            ticket_id TEXT NOT NULL REFERENCES tickets(ticket_id) ON DELETE CASCADE,
             user_id TEXT NOT NULL REFERENCES users(user_id),
             body TEXT NOT NULL,
             created_at TEXT NOT NULL
